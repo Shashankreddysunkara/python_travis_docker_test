@@ -2,6 +2,8 @@ branches:
   only:
     - master
 language: python
+python:
+  - "2.7"
 env:
   - TOXENV=py27
   - MAKE_TARGET=test
