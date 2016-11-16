@@ -14,6 +14,8 @@ env:
   matrix:
   - MAKE_TARGET=test
 sudo: required
+services:
+  - docker
 before_install:
 - sudo apt-get update
 install: pip install coveralls tox
@@ -21,4 +23,6 @@ script: if [[ -n "$MAKE_TARGET" ]]; then make "$MAKE_TARGET"; else tox; fi
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker build -t abrarsheikh/python_travis_docker_test .
+    docker push abrarsheikh/python_travis_docker_test
     fi
